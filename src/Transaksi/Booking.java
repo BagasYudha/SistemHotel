@@ -124,13 +124,13 @@ public class Booking extends javax.swing.JFrame {
 
         tblBooking.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Id Staff", "Id Tamu", "Id Kamar", "Lama", "Total", "Status Bayar"
+                "Id", "Id Staff", "Id Tamu", "Id Kamar", "Lama", "Harga Kamar", "Total", "Status Bayar"
             }
         ));
         tblBooking.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -299,7 +299,6 @@ public class Booking extends javax.swing.JFrame {
         pst.setString(3, cbKamar.getSelectedItem().toString());
         pst.setString(4, txtDurasi.getText());
 
-        // Mengambil harga dari tabel tb_kamar berdasarkan id_kamar yang dipilih
         String hargaSql = "SELECT harga FROM tb_kamar WHERE id_kamar = ?";
         java.sql.PreparedStatement hargaPst = conn.prepareStatement(hargaSql);
         hargaPst.setString(1, cbKamar.getSelectedItem().toString());
@@ -307,14 +306,12 @@ public class Booking extends javax.swing.JFrame {
         hargaRes.next();
         double harga = hargaRes.getDouble("harga");
 
-        // Menghitung total
         int durasi = Integer.parseInt(txtDurasi.getText());
         double total = harga * durasi;
-        
 
         pst.setDouble(5, total);
         pst.setString(6, cbStatus.getSelectedItem().toString());
-        pst.setString(7, txtIdBooking.getText()); // Ubah urutan, id_booking sebagai parameter terakhir
+        pst.setString(7, txtIdBooking.getText());
 
         pst.executeUpdate();
 
@@ -342,20 +339,18 @@ public class Booking extends javax.swing.JFrame {
             pst.setString(5, txtDurasi.getText());
             pst.setString(6, cbStatus.getSelectedItem().toString());
             
-             // Mengambil harga dari tabel tb_kamar berdasarkan id_kamar yang dipilih
-        String hargaSql = "SELECT harga FROM tb_kamar WHERE id_kamar = ?";
-        java.sql.PreparedStatement hargaPst = conn.prepareStatement(hargaSql);
-        hargaPst.setString(1, cbKamar.getSelectedItem().toString());
-        java.sql.ResultSet hargaRes = hargaPst.executeQuery();
-        hargaRes.next();
-        double harga = hargaRes.getDouble("harga");
+            String hargaSql = "SELECT harga FROM tb_kamar WHERE id_kamar = ?";
+            java.sql.PreparedStatement hargaPst = conn.prepareStatement(hargaSql);
+            hargaPst.setString(1, cbKamar.getSelectedItem().toString());
+            java.sql.ResultSet hargaRes = hargaPst.executeQuery();
+            hargaRes.next();
+            double harga = hargaRes.getDouble("harga");
 
-        // Menghitung total
-        int durasi = Integer.parseInt(txtDurasi.getText());
-        double total = harga * durasi;
+            int durasi = Integer.parseInt(txtDurasi.getText());
+            double total = harga * durasi;
 
-        pst.setDouble(6, total);
-        pst.setString(7, cbStatus.getSelectedItem().toString());
+            pst.setDouble(6, total);
+            pst.setString(7, cbStatus.getSelectedItem().toString());
 
             pst.executeUpdate();
 
@@ -459,8 +454,8 @@ public class Booking extends javax.swing.JFrame {
 
     private void clearFields() {
     DefaultTableModel model = (DefaultTableModel) tblBooking.getModel();
-    model.setRowCount(0); // Clear the existing rows
-    buka_tabel(); // Reload the data
+    model.setRowCount(0); 
+    buka_tabel();
     }
     
     private void drop_staff() {
@@ -524,27 +519,36 @@ public class Booking extends javax.swing.JFrame {
         model.addColumn("Id Tamu");
         model.addColumn("Id Kamar");
         model.addColumn("Lama");
+        model.addColumn("Harga Kamar");
         model.addColumn("Total");
         model.addColumn("Status Bayar");
 
         try {
-            String sql = "SELECT * FROM tb_booking_kamar";
+            String sql = "SELECT b.id_booking, b.id_staff, b.id_tamu, b.id_kamar, b.durasi_sewa, k.harga, b.total, b.status_pembayaran "
+                    + "FROM tb_booking_kamar b JOIN tb_kamar k ON b.id_kamar = k.id_kamar";
             java.sql.Connection conn = koneksi.ConnectionDB();
             java.sql.Statement stm = conn.createStatement();
             java.sql.ResultSet res = stm.executeQuery(sql);
 
             while (res.next()) {
-                String id = res.getString("id_booking");
-                String idStaff = res.getString("id_staff");
-                String idTamu = res.getString("id_tamu");
-                String idKamar = res.getString("id_kamar");
-                String durasiSewa = res.getString("durasi_sewa");
-                String total = res.getString("total");
-                String statusString = res.getString("status_pembayaran");
+//                String id = res.getString("id_booking");
+//                String idStaff = res.getString("id_staff");
+//                String idTamu = res.getString("id_tamu");
+//                String idKamar = res.getString("id_kamar");
+//                String durasiSewa = res.getString("durasi_sewa");
+//                String total = res.getString("total");
+//                String statusString = res.getString("status_pembayaran");
+//
+//                StatusBayar status = StatusBayar.fromString(statusString);
 
-                StatusBayar status = StatusBayar.fromString(statusString);
-
-                model.addRow(new Object[]{id, idStaff, idTamu, idKamar, durasiSewa, total, status.toString()});
+                model.addRow(new Object[]{res.getString("id_booking"),
+                    res.getString("id_staff"),
+                    res.getString("id_tamu"),
+                    res.getString("id_kamar"),
+                    res.getString("durasi_sewa"),
+                    res.getDouble("harga"),
+                    res.getDouble("total"),
+                    res.getString("status_pembayaran")});
             }
 
             tblBooking.setModel(model);

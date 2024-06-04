@@ -50,18 +50,20 @@ public class Staff extends javax.swing.JFrame {
         txtAlamat = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         cbJabatan = new javax.swing.JComboBox<>();
+        txtNoIdentitas = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tblStaff.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nama", "Jabatan", "Kontak", "Alamat"
+                "Id", "No Identitas", "Nama", "Jabatan", "Kontak", "Alamat"
             }
         ));
         tblStaff.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -122,13 +124,15 @@ public class Staff extends javax.swing.JFrame {
 
         cbJabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Receptionist", "Cleaning Service", "Security", "Other" }));
 
+        jLabel7.setText("No Identitas");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -152,10 +156,14 @@ public class Staff extends javax.swing.JFrame {
                                 .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtKontak, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtAlamat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbJabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbJabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtNoIdentitas, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,6 +178,10 @@ public class Staff extends javax.swing.JFrame {
                     .addComponent(txtIdStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtNoIdentitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -180,7 +192,7 @@ public class Staff extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtKontak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -203,30 +215,34 @@ public class Staff extends javax.swing.JFrame {
          
         txtIdStaff.setText(tblStaff.getModel().getValueAt(row, 0).toString());
         
-        txtNama.setText(tblStaff.getModel().
+        txtNoIdentitas.setText(tblStaff.getModel().
         getValueAt(row, 1).toString());
+        
+        txtNama.setText(tblStaff.getModel().
+        getValueAt(row, 2).toString());
        
         txtKontak.setText(tblStaff.getModel().
-        getValueAt(row, 3).toString());
+        getValueAt(row, 4).toString());
         
         txtAlamat.setText(tblStaff.getModel().
-        getValueAt(row, 4).toString());
+        getValueAt(row, 5).toString());
         
         txtIdStaff.disable();
     }//GEN-LAST:event_tblStaffMouseClicked
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
                                                     
-    String sql = "INSERT INTO tb_staff (id_staff, nama, jabatan, kontak, alamat) VALUES (?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO tb_staff (id_staff, no_identitas, nama, jabatan, kontak, alamat) VALUES (?, ?, ?, ?, ?, ?)";
     try {
         java.sql.Connection conn = koneksi.ConnectionDB();
         java.sql.PreparedStatement pst = conn.prepareStatement(sql);
         
         pst.setString(1, txtIdStaff.getText());
-        pst.setString(2, txtNama.getText());
-        pst.setString(3, cbJabatan.getSelectedItem().toString());
-        pst.setString(4, txtKontak.getText());
-        pst.setString(5, txtAlamat.getText());
+        pst.setString(2, txtNoIdentitas.getText());
+        pst.setString(3, txtNama.getText());
+        pst.setString(4, cbJabatan.getSelectedItem().toString());
+        pst.setString(5, txtKontak.getText());
+        pst.setString(6, txtAlamat.getText());
         
         pst.executeUpdate();
         
@@ -248,6 +264,7 @@ public class Staff extends javax.swing.JFrame {
                 java.sql.Connection conn = koneksi.ConnectionDB();
 
                 String sql = "UPDATE tb_staff SET "
+                        + "no_identitas = ?, "
                         + "nama = ?, "
                         + "jabatan = ?, "
                         + "kontak = ?, "
@@ -256,11 +273,12 @@ public class Staff extends javax.swing.JFrame {
 
                 java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
-                pst.setString(1, txtNama.getText());
-                pst.setString(2, cbJabatan.getSelectedItem().toString());
-                pst.setString(3, txtKontak.getText());
-                pst.setString(4, txtAlamat.getText());
-                pst.setInt(5, Integer.parseInt(txtIdStaff.getText()));
+                pst.setInt(1, Integer.parseInt(txtNoIdentitas.getText()));
+                pst.setString(2, txtNama.getText());
+                pst.setString(3, cbJabatan.getSelectedItem().toString());
+                pst.setString(4, txtKontak.getText());
+                pst.setString(5, txtAlamat.getText());
+                pst.setString(6, txtIdStaff.getText());
                 
                 pst.executeUpdate();
 
@@ -364,16 +382,19 @@ public class Staff extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblStaff;
     private javax.swing.JTextField txtAlamat;
     private javax.swing.JTextField txtIdStaff;
     private javax.swing.JTextField txtKontak;
     private javax.swing.JTextField txtNama;
+    private javax.swing.JTextField txtNoIdentitas;
     // End of variables declaration//GEN-END:variables
 
     private void refreshTable() {
     txtIdStaff.setText("");
+    txtNoIdentitas.setText("");
     txtNama.setText("");
     cbJabatan.setSelectedIndex(0);
     txtKontak.setText("");
@@ -390,18 +411,19 @@ public class Staff extends javax.swing.JFrame {
         
     DefaultTableModel model = new DefaultTableModel();
     model.addColumn("Id");
+    model.addColumn("No Identitas");
     model.addColumn("Nama");
     model.addColumn("Jabatan");
     model.addColumn("Kontak");
     model.addColumn("Alamat");
     try {
-        String sql = "select * from tb_staff";
+        String sql = "SELECT * from tb_staff";
         java.sql.Connection conn = koneksi.ConnectionDB();
         java.sql.Statement stm = conn.createStatement();
         java.sql.ResultSet res = stm.executeQuery(sql);
         while(res.next()){
-            model.addRow(new Object[]{res.getString(1), res.getString(2),
-                res.getString(3), res.getString(4), res.getString(5)});   
+            model.addRow(new Object[]{res.getString(1), res.getString(2), res.getString(3),
+                res.getString(4), res.getString(5), res.getString(6)});   
         }
         tblStaff.setModel(model);
     } catch (Exception e){

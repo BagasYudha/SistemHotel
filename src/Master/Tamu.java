@@ -38,7 +38,7 @@ public class Tamu extends javax.swing.JFrame {
         txtIdTamu = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtNama = new javax.swing.JTextField();
+        txtNoIdentitas = new javax.swing.JTextField();
         txtAlamat = new javax.swing.JTextField();
         txtKontak = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -47,6 +47,8 @@ public class Tamu extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         btnSubmit = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
+        txtNama = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,13 +57,13 @@ public class Tamu extends javax.swing.JFrame {
 
         tblTamu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nama", "Alamat", "Kontak"
+                "Id", "No Identitas", "Nama", "Alamat", "Kontak"
             }
         ));
         tblTamu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -73,7 +75,7 @@ public class Tamu extends javax.swing.JFrame {
 
         jLabel2.setText("ID Tamu");
 
-        jLabel3.setText("Nama");
+        jLabel3.setText("No Identitas");
 
         jLabel5.setText("Kontak");
 
@@ -109,6 +111,8 @@ public class Tamu extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Nama");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,7 +129,7 @@ public class Tamu extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtNoIdentitas, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -140,14 +144,18 @@ public class Tamu extends javax.swing.JFrame {
                                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(txtKontak, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(12, 12, 12))
+                                    .addComponent(txtKontak, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -166,6 +174,10 @@ public class Tamu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
+                            .addComponent(txtNoIdentitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
                             .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -193,14 +205,17 @@ public class Tamu extends javax.swing.JFrame {
 
         txtIdTamu.setText(tblTamu.getModel().getValueAt(row, 0).toString());
 
-        txtNama.setText(tblTamu.getModel().
+        txtNoIdentitas.setText(tblTamu.getModel().
             getValueAt(row, 1).toString());
-
-        txtAlamat.setText(tblTamu.getModel().
+        
+        txtNama.setText(tblTamu.getModel().
             getValueAt(row, 2).toString());
 
-        txtKontak.setText(tblTamu.getModel().
+        txtAlamat.setText(tblTamu.getModel().
             getValueAt(row, 3).toString());
+
+        txtKontak.setText(tblTamu.getModel().
+            getValueAt(row, 4).toString());
 
         txtIdTamu.disable();
     }//GEN-LAST:event_tblTamuMouseClicked
@@ -244,6 +259,7 @@ public class Tamu extends javax.swing.JFrame {
             java.sql.Connection conn = koneksi.ConnectionDB();
 
             String sql = "UPDATE tb_tamu SET "
+            + "no_identitas = ?, "
             + "nama = ?, "
             + "alamat = ?, "
             + "kontak = ? "
@@ -251,10 +267,11 @@ public class Tamu extends javax.swing.JFrame {
 
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
-            pst.setString(1, txtNama.getText());
-            pst.setString(2, txtAlamat.getText());
-            pst.setString(3, txtKontak.getText());
-            pst.setInt(4, Integer.parseInt(txtIdTamu.getText()));
+            pst.setString(1, txtNoIdentitas.getText());
+            pst.setString(2, txtNama.getText());
+            pst.setString(3, txtAlamat.getText());
+            pst.setString(4, txtKontak.getText());
+            pst.setInt(5, Integer.parseInt(txtIdTamu.getText()));
 
             pst.executeUpdate();
 
@@ -262,6 +279,7 @@ public class Tamu extends javax.swing.JFrame {
 
             txtIdTamu.setText("");
             txtNama.setText("");
+            txtNoIdentitas.setText("");
             txtAlamat.setText("");
             txtKontak.setText("");
             txtIdTamu.setEnabled(true);
@@ -277,26 +295,25 @@ public class Tamu extends javax.swing.JFrame {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
 
-        String sql = "INSERT INTO tb_tamu (id_tamu, nama, alamat, kontak) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO tb_tamu (id_tamu, no_identitas, nama, alamat, kontak) VALUES (?, ?, ?, ?, ?)";
         try {
             java.sql.Connection conn = koneksi.ConnectionDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
             pst.setString(1, txtIdTamu.getText());
-            pst.setString(2, txtNama.getText());
-            pst.setString(3, txtAlamat.getText());
-            pst.setString(4, txtKontak.getText());
+            pst.setString(2, txtNoIdentitas.getText());
+            pst.setString(3, txtNama.getText());
+            pst.setString(4, txtAlamat.getText());
+            pst.setString(5, txtKontak.getText());
 
             pst.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Data inserted successfully!");
 
             clearFields();
-
             refreshTable();
-
             buka_tabel();
-
+            
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error inserting data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -355,16 +372,19 @@ public class Tamu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblTamu;
     private javax.swing.JTextField txtAlamat;
     private javax.swing.JTextField txtIdTamu;
     private javax.swing.JTextField txtKontak;
     private javax.swing.JTextField txtNama;
+    private javax.swing.JTextField txtNoIdentitas;
     // End of variables declaration//GEN-END:variables
 
     private void refreshTable() {
     txtIdTamu.setText("");
+    txtNoIdentitas.setText("");
     txtNama.setText("");
     txtAlamat.setText("");
     txtKontak.setText("");
@@ -380,6 +400,7 @@ public class Tamu extends javax.swing.JFrame {
         
     DefaultTableModel model = new DefaultTableModel();
     model.addColumn("Id");
+    model.addColumn("No Identitas");
     model.addColumn("Nama");
     model.addColumn("Alamat");
     model.addColumn("Kontak");
@@ -389,8 +410,8 @@ public class Tamu extends javax.swing.JFrame {
         java.sql.Statement stm = conn.createStatement();
         java.sql.ResultSet res = stm.executeQuery(sql);
         while(res.next()){
-            model.addRow(new Object[]{res.getString(1), res.getString(2),
-                res.getString(3), res.getString(4)});   
+            model.addRow(new Object[]{res.getString(1), res.getString(2), res.getString(3),
+                res.getString(4), res.getString(5)});   
         }
         tblTamu.setModel(model);
     } catch (Exception e){

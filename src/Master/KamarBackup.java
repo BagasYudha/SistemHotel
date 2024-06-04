@@ -286,6 +286,7 @@ public class KamarBackup extends javax.swing.JFrame {
             pst.executeUpdate();
             
             refreshTable();
+            buka_tabel();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error deleting record: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
