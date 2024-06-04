@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/PBO/SistemHotel/src/master/MenuNavigasi.java</file>
-            <file>file:/E:/PBO/SistemHotel/src/FrameForm/Staff.java</file>
-            <file>file:/E:/PBO/SistemHotel/src/FrameForm/Kamar.java</file>
-            <file>file:/E:/PBO/SistemHotel/src/FrameForm/Tamu.java</file>
+            <file>file:/E:/PBO/SistemHotel/src/Master/Tamu.java</file>
+            <file>file:/E:/PBO/SistemHotel/src/lainnya/MenuNavigasi.java</file>
             <file>file:/E:/PBO/SistemHotel/src/Transaksi/Booking.java</file>
+            <file>file:/E:/PBO/SistemHotel/src/Master/KamarBackup.java</file>
+            <file>file:/E:/PBO/SistemHotel/src/Master/Staff.java</file>
+            <file>file:/E:/PBO/SistemHotel/src/lainnya/koneksi.java</file>
+            <file>file:/E:/PBO/SistemHotel/src/lainnya/SistemHotel.java</file>
         </group>
     </open-files>
 </project-private>

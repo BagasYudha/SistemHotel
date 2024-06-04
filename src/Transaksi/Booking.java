@@ -4,11 +4,11 @@
  */
 package Transaksi;
 
-import FrameForm.KamarBackup;
+import Master.KamarBackup;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import master.MenuNavigasi;
-import master.koneksi;
+import lainnya.MenuNavigasi;
+import lainnya.koneksi;
 
 /**
  *
@@ -28,13 +28,13 @@ public class Booking extends javax.swing.JFrame {
     }
     
     
-        public enum StatusKamar {
+        public enum StatusBayar {
         LUNAS("Lunas"),
         BELUM_LUNAS("Belum Lunas");
 
         private final String displayName;
 
-        StatusKamar(String displayName) {
+        StatusBayar(String displayName) {
             this.displayName = displayName;
         }
 
@@ -43,8 +43,8 @@ public class Booking extends javax.swing.JFrame {
             return this.displayName;
         }
 
-        public static StatusKamar fromString(String text) {
-            for (StatusKamar status : StatusKamar.values()) {
+        public static StatusBayar fromString(String text) {
+            for (StatusBayar status : StatusBayar.values()) {
                 if (status.displayName.equalsIgnoreCase(text)) {
                     return status;
                 }
@@ -124,13 +124,13 @@ public class Booking extends javax.swing.JFrame {
 
         tblBooking.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Id Staff", "Id Tamu", "Id Kamar", "Durasi", "Status Bayar"
+                "Id", "Id Staff", "Id Tamu", "Id Kamar", "Lama", "Total", "Status Bayar"
             }
         ));
         tblBooking.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -140,7 +140,7 @@ public class Booking extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblBooking);
 
-        jLabel7.setText("Durasi Sewa");
+        jLabel7.setText("Lama Sewa");
 
         btnBack.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
         btnBack.setText("<");
@@ -281,42 +281,56 @@ public class Booking extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         try {
-            java.sql.Connection conn = koneksi.ConnectionDB();
+        java.sql.Connection conn = koneksi.ConnectionDB();
 
-            String sql = "UPDATE tb_booking_kamar SET "
-            + "id_booking = ?, "
-            + "id_staff = ?, "
-            + "id_tamu = ?, "
-            + "id_kamar = ?, "
-            + "durasi_sewa = ?, "
-            + "status_pembayaran = ? "
-            + "WHERE id_booking = ?";
+        String sql = "UPDATE tb_booking_kamar SET "
+        + "id_staff = ?, "
+        + "id_tamu = ?, "
+        + "id_kamar = ?, "
+        + "durasi_sewa = ?, "
+        + "total = ?, "
+        + "status_pembayaran = ? "
+        + "WHERE id_booking = ?";
 
-            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
-            pst.setString(1, txtIdBooking.getText());
-            pst.setString(2, cbStaff.getSelectedItem().toString());
-            pst.setString(3, cbTamu.getSelectedItem().toString());
-            pst.setString(4, cbKamar.getSelectedItem().toString());
-            pst.setString(5, txtDurasi.getText());
-            pst.setString(6, cbStatus.getSelectedItem().toString());
-            pst.setString(7, txtIdBooking.getText());
+        pst.setString(1, cbStaff.getSelectedItem().toString());
+        pst.setString(2, cbTamu.getSelectedItem().toString());
+        pst.setString(3, cbKamar.getSelectedItem().toString());
+        pst.setString(4, txtDurasi.getText());
 
-            pst.executeUpdate();
+        // Mengambil harga dari tabel tb_kamar berdasarkan id_kamar yang dipilih
+        String hargaSql = "SELECT harga FROM tb_kamar WHERE id_kamar = ?";
+        java.sql.PreparedStatement hargaPst = conn.prepareStatement(hargaSql);
+        hargaPst.setString(1, cbKamar.getSelectedItem().toString());
+        java.sql.ResultSet hargaRes = hargaPst.executeQuery();
+        hargaRes.next();
+        double harga = hargaRes.getDouble("harga");
 
-            JOptionPane.showMessageDialog(this, "Data berhasil di Edit");
+        // Menghitung total
+        int durasi = Integer.parseInt(txtDurasi.getText());
+        double total = harga * durasi;
+        
 
-            clearFields();
-            txtIdBooking.setEnabled(true);
-            buka_tabel();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Proses edit gagal: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
+        pst.setDouble(5, total);
+        pst.setString(6, cbStatus.getSelectedItem().toString());
+        pst.setString(7, txtIdBooking.getText()); // Ubah urutan, id_booking sebagai parameter terakhir
+
+        pst.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Data berhasil di Edit");
+
+        clearFields();
+        txtIdBooking.setEnabled(true);
+        buka_tabel();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Proses edit gagal: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-         String sql = "INSERT INTO tb_booking_kamar (id_booking, id_staff, id_tamu, id_kamar, durasi_sewa, status_pembayaran) VALUES (?, ?, ?, ?, ?, ?)";
+         String sql = "INSERT INTO tb_booking_kamar (id_booking, id_staff, id_tamu, id_kamar, durasi_sewa, total, status_pembayaran) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             java.sql.Connection conn = koneksi.ConnectionDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
@@ -327,6 +341,21 @@ public class Booking extends javax.swing.JFrame {
             pst.setString(4, cbKamar.getSelectedItem().toString());
             pst.setString(5, txtDurasi.getText());
             pst.setString(6, cbStatus.getSelectedItem().toString());
+            
+             // Mengambil harga dari tabel tb_kamar berdasarkan id_kamar yang dipilih
+        String hargaSql = "SELECT harga FROM tb_kamar WHERE id_kamar = ?";
+        java.sql.PreparedStatement hargaPst = conn.prepareStatement(hargaSql);
+        hargaPst.setString(1, cbKamar.getSelectedItem().toString());
+        java.sql.ResultSet hargaRes = hargaPst.executeQuery();
+        hargaRes.next();
+        double harga = hargaRes.getDouble("harga");
+
+        // Menghitung total
+        int durasi = Integer.parseInt(txtDurasi.getText());
+        double total = harga * durasi;
+
+        pst.setDouble(6, total);
+        pst.setString(7, cbStatus.getSelectedItem().toString());
 
             pst.executeUpdate();
 
@@ -467,18 +496,22 @@ public class Booking extends javax.swing.JFrame {
                     }
         
         private void drop_kamar() {
-        try {
-            String sql = "SELECT * FROM tb_kamar";
-            java.sql.Connection conn = koneksi.ConnectionDB();
-            java.sql.Statement stm = conn.createStatement();
-            java.sql.ResultSet res = stm.executeQuery(sql);
+            
+    //cbKamar.removeAllItems();
+    try {
+        String sql = "SELECT id_kamar FROM tb_kamar WHERE status = 'Tersedia'";
+        java.sql.Connection conn = koneksi.ConnectionDB();
+        java.sql.Statement stm = conn.createStatement();
+        java.sql.ResultSet res = stm.executeQuery(sql);
 
-            while (res.next()) {
-               String idKamar = res.getString("id_kamar");
-                cbKamar.addItem(idKamar);
-            } 
-        }catch (Exception e){
-                    }
+        while (res.next()) {
+            String idKamar = res.getString("id_kamar");
+            cbKamar.addItem(idKamar);
+        } 
+    } catch (Exception e){
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
         
     }
     
@@ -490,7 +523,8 @@ public class Booking extends javax.swing.JFrame {
         model.addColumn("ID Staff");
         model.addColumn("Id Tamu");
         model.addColumn("Id Kamar");
-        model.addColumn("Durasi");
+        model.addColumn("Lama");
+        model.addColumn("Total");
         model.addColumn("Status Bayar");
 
         try {
@@ -505,11 +539,12 @@ public class Booking extends javax.swing.JFrame {
                 String idTamu = res.getString("id_tamu");
                 String idKamar = res.getString("id_kamar");
                 String durasiSewa = res.getString("durasi_sewa");
+                String total = res.getString("total");
                 String statusString = res.getString("status_pembayaran");
 
-                StatusKamar status = StatusKamar.fromString(statusString);
+                StatusBayar status = StatusBayar.fromString(statusString);
 
-                model.addRow(new Object[]{id, idStaff, idTamu, idKamar, durasiSewa, status.toString()});
+                model.addRow(new Object[]{id, idStaff, idTamu, idKamar, durasiSewa, total, status.toString()});
             }
 
             tblBooking.setModel(model);
